@@ -1,0 +1,8 @@
+FROM alpine
+#WORKDIR /tmp
+#COPY bonjour.txt .
+RUN cd /tmp \
+    && echo "bonjour le monde !!" > bonjour.txt
+
+#ENTRYPOINT cat /tmp/bonjour.txt
+CMD ["cat", "/tmp/bonjour.txt"]
