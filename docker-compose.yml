@@ -1,0 +1,23 @@
+version: "3"
+services:
+  monservice:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    networks:
+      - monreseau
+    volumes:
+      - monvolume:/usr/share/nginx/html
+    depends_on:
+      - "autre_service"
+  
+  autre_service:
+    image: debian:latest
+    command : ["/bin/bash", "-c", "echo bonjour le monde"]
+
+networks:
+  monreseau:
+    driver: bridge ## optionnel
+volumes:
+  monvolume:
+    driver: local

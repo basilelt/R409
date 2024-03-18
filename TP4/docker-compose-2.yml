@@ -1,0 +1,8 @@
+version: "3"
+services:
+  monservice:
+    image: debian:latest
+    environment:
+      - VAR1="mavariable1"
+      - VAR2="mavariable2"
+    command: ["/bin/bash", "-c", "echo $$VAR1 $$VAR2"]    

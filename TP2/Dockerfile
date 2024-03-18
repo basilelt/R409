@@ -13,4 +13,5 @@ ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
 
 #CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "modele.asgi:application"]
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "modele.wsgi:application"]
+#CMD ["gunicorn", "--bind", "0.0.0.0:8000", "modele.wsgi:application"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
