@@ -1,0 +1,43 @@
+## Sleep non nécessaire avec "depends_on"
+
+version: "3"
+services:
+  web:
+    image: nginx:latest
+    restart: unless-stopped
+    # command: sh -c "sleep 20 && nginx -g 'daemon off;'"
+    volumes:
+      - copy-web:/usr/share/nginx/html/
+    networks:
+      - back_web
+    hostname: web
+    ports:
+      - "8080:80"
+    depends_on:
+      - "copy"
+    
+  copy:
+    image: alpine:latest
+    depends_on:
+      - "write"
+    # command: sh -c "sleep 10 && cp -f /usr/share/write/index.txt /usr/share/copy/index.html"
+    command: sh -c "cp -f /usr/share/write/index.txt /usr/share/copy/index.html"
+    volumes:
+      - write-copy:/usr/share/write/
+      - copy-web:/usr/share/copy/
+  
+  write:
+    image: alpine:latest
+    command: /bin/sh -c "echo 'mon site web 3' > /usr/share/write/index.txt"
+    volumes:
+      - write-copy:/usr/share/write/
+
+networks:
+  back_web:
+    driver: bridge
+
+volumes:
+  write-copy:
+    driver: local
+  copy-web:
+    driver: local
